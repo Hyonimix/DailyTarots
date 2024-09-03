@@ -360,6 +360,18 @@
 							if (callback) callback();
 						}
 					}, delay);
+
+					// 마우스 클릭 또는 터치 시 타자치기 효과 생략
+					function skipTypeWriter() {
+						clearInterval(intervalId);
+						element.innerHTML = text;
+						if (callback) callback();
+						document.removeEventListener('click', skipTypeWriter);
+						document.removeEventListener('touchstart', skipTypeWriter);
+					}
+
+					document.addEventListener('click', skipTypeWriter);
+					document.addEventListener('touchstart', skipTypeWriter);
 				}
 
 				// 결과 저장 및 새로고침 기능
@@ -375,6 +387,10 @@
 					let button = document.createElement('button');
 					button.id = 'copyButton';
 					button.className = 'btn btn-primary';
+					button.style.background = 'linear-gradient(135deg, #251327, #28153C)';
+					button.style.borderColor = '#300959';
+					button.style.borderRadius = '15px';
+					button.style.padding = '15px 30px';
 					button.style.margin = '0 auto';
 					button.style.display = 'block';
 					button.style.opacity = '0';
@@ -408,6 +424,7 @@
 							console.error('Could not copy text: ', err);
 						});
 					};
+
 					let buttonContainer = document.getElementById('buttonContainer');
 					buttonContainer.appendChild(button);
 
