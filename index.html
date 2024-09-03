@@ -374,8 +374,14 @@
 					document.addEventListener('touchstart', skipTypeWriter);
 				}
 
+				// 버튼 중복 생성 방지용
+				var isCopyButtonVisible = false;
+
 				// 결과 저장 및 새로고침 기능
 				function saveResult() {
+					if (isCopyButtonVisible) return;
+					isCopyButtonVisible = true;
+				
 					let today = new Date();
 					let formattedDate = today.getMonth() + 1 + "月" + today.getDate() + "日";
 					let resultText = "占った日: " + formattedDate + "\n" +
@@ -419,6 +425,7 @@
 
 							setTimeout(function () {
 								location.reload();
+								isCopyButtonVisible = false;
 							}, 500);
 						}, function (err) {
 							console.error('Could not copy text: ', err);
