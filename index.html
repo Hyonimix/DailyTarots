@@ -238,6 +238,7 @@
 			// 카드 인덱스 매핑
 			let selectedCardIndex = cardIndexMap[userInput];
 			let selectedCard = tarotCards[selectedCardIndex];
+			let selectedCardPosition = isReversed[userInput];
 
 			let interpretation = "";
 			let reverseInterpretation = "";
@@ -367,8 +368,8 @@
 					let formattedDate = today.getMonth() + 1 + "月" + today.getDate() + "日";
 					let resultText = "占った日: " + formattedDate + "\n" +
 						"選んだカード: " + selectedCard + "\n" +
-						"位置: " + (isReversed ? "逆位置" : "正位置") + "\n" +
-						"説明: " + (isReversed ? reverseInterpretation : interpretation);
+						"位置: " + selectedCardPosition + "\n" +
+						"説明: " + (selectedCardPosition === "逆位置" ? reverseInterpretation : interpretation);
 
 					// 복사하기 버튼 생성
 					let button = document.createElement('button');
