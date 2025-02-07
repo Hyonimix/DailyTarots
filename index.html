@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon"
+		href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiByeT0iMTAiIGZpbGw9IiMyODE1M0MiIHN0cm9rZT0iIzMwMDk1OSIgc3Ryb2tlLXdpZHRoPSI4Ii8+PHBhdGggZD0iTTUwLDQwIGEyMCwyMCAwIDEsMCAxNywtMTIgYTEyLDEyIDAgMSwxIC0xNywxMiIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik00MCw3MCBMNDUsODUgTDM1LDc1IEwyNSw4NSBMMzAsNzAgTDIwLDYwIEwzNSw2MCBMNDAsNDUgTDQ1LDYwIEw2MCw2MCBMNTAsNzAgWiIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<style>
+		::-webkit-scrollbar {
+			display: none;
+		}
+
+		html {
+			scrollbar-width: none;
+		}
+
+		body {
+			background-color: #2C2C2C;
+			color: white;
+			overflow: hidden;
+			-ms-overflow-style: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		@keyframes fadeIn {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		.card-button {
+			width: 100px;
+			height: 150px;
+			border-radius: 15px;
+			font-size: 20px;
+			text-align: center;
+			line-height: 130px;
+		}
+
+		.fade-in {
+			transition: opacity 2s;
+			opacity: 0;
+		}
+
+		.fade-in.visible {
+			opacity: 1;
+		}
+
+		.container {
+			animation: fadeIn 0.5s ease-in-out 1 both;
+		}
+
+		footer {
+			position: fixed;
+			left: 0;
+			right: 0;
+			bottom: 2.5%;
+			width: 50%;
+			margin: auto;
+			text-align: center;
+		}
+
+		@media (max-height: 720px) {
+			footer {
+				display: none;
+			}
+		}
+	</style>
+	<title>Daily Tarots</title>
+</head>
+
+<body>
+	<div class="container py-5">
+		<h3 id="headTitle" class="text-center mb-4">Daily Tarots</h3>
+		<p id="result" class="text-center"></p>
+		<p id="cards" class="text-center">6枚のカードの中で1枚選んでください。</p>
+
+		<input type="hidden" id="userInput" class="form-control">
+
+		<div class="row justify-content-md-center mb-4">
+			<div class="col-6 col-md-2 mb-2 d-flex justify-content-center">
+				<button onclick="setInput('A')" class="btn btn-primary card-button"
+					style="background-color: #251327; border-color: #300959;">A</button>
+			</div>
+			<div class="col-6 col-md-2 mb-2 d-flex justify-content-center">
+				<button onclick="setInput('B')" class="btn btn-primary card-button"
+					style="background-color: #28153C; border-color: #300959;">B</button>
+			</div>
+			<div class="w-100 d-none d-md-block"></div>
+			<div class="col-6 col-md-2 mb-2 d-flex justify-content-center">
+				<button onclick="setInput('C')" class="btn btn-primary card-button"
+					style="background-color: #28153C; border-color: #300959;">C</button>
+			</div>
+			<div class="col-6 col-md-2 mb-2 d-flex justify-content-center">
+				<button onclick="setInput('D')" class="btn btn-primary card-button"
+					style="background-color: #251327; border-color: #300959;">D</button>
+			</div>
+			<div class="w-100 d-none d-md-block"></div>
+			<div class="col-6 col-md-2 mb-2 d-flex justify-content-center">
+				<button onclick="setInput('E')" class="btn btn-primary card-button"
+					style="background-color: #251327; border-color: #300959;">E</button>
+			</div>
+			<div class="col-6 col-md-2 mb-2 d-flex justify-content-center">
+				<button onclick="setInput('F')" class="btn btn-primary card-button"
+					style="background-color: #28153C; border-color: #300959;">F</button>
+			</div>
+		</div>
+
+		<div id="buttonContainer"></div>
+
+		<p id="nozoki" class="text-center mt-4"></p>
+		<div class="d-flex justify-content-center">
+			<button id="nozokiBtn" onclick="setInput('X')" class="btn btn-secondary"
+				style="display: none;">カードを覗く</button>
+		</div>
+	</div>
+
+	<footer class="container mt-4 text-center text-muted">
+		<a class="text-muted text-decoration-none font-weight-bold" style="cursor: default;"
+			href="https://raw.githubusercontent.com/Hyonimix/DailyTarots/main/LICENSE" target="_blank">CC BY-NC-SA</a>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<script>
+		// 카드 연타 방지
+		function disableButtons() {
+			const buttons = document.querySelectorAll('.card-button');
+			buttons.forEach(button => {
+				button.disabled = true;
+			});
+		}
+
+		// 카드 선택
+		function setInput(value) {
+			if (value !== 'X') {
+				disableButtons();
+			}
+			document.getElementById('userInput').value = value;
+			getInput();
+		}
+
+		// 각 카드의 이름을 스택
+		let tarotCards = [
+			"I 愚者 (The Fool)",
+			"II 魔術師 (The Magician)",
+			"III 女教皇 (The High Priestess)",
+			"IV 女帝 (The Empress)",
+			"V 皇帝 (The Emperor)",
+			"VI 教皇 (The Hierophant)",
+			"VII 恋人 (The Lovers)",
+			"VIII 戦車 (The Chariot)",
+			"IX 力 (Strength)",
+			"X 隠者 (The Hermit)",
+			"XI 運命の輪 (Wheel of Fortune)",
+			"XII 正義 (Justice)",
+			"XIII 吊るされた男 (The Hanged Man)",
+			"XIV 死神 (Death)",
+			"XV 節制 (Temperance)",
+			"XVI 悪魔 (The Devil)",
+			"XVII 塔 (The Tower)",
+			"XVIII 星 (The Star)",
+			"XIX 月 (The Moon)",
+			"XX 太陽 (The Sun)",
+			"XXI 審判 (Judgement)",
+			"XXII 世界 (The World)"
+		];
+
+		// 카드 섞기
+		for (let i = tarotCards.length - 1; i > 0; i--) {
+			let j = Math.floor(Math.random() * (i + 1));
+			let temp = tarotCards[i];
+			tarotCards[i] = tarotCards[j];
+			tarotCards[j] = temp;
+		}
+		let options = ["A", "B", "C", "D", "E", "F"];
+
+		// 카드 방향 스캔
+		let isReversed = {};
+		for (let i = 0; i < options.length; i++) {
+			isReversed[options[i]] = Math.random() < 0.5 ? "逆位置" : "正位置";
+		}
+
+		// 카드 인덱스 매핑
+		let cardIndexMap = {};
+		for (let i = 0; i < options.length; i++) {
+			cardIndexMap[options[i]] = i;
+		}
+
+		// 훔쳐보기 버튼 생성
+		var clickCount = 0;
+		var timeout;
+		$(document).ready(function () {
+			$("#headTitle").click(function () {
+				clickCount++;
+				clearTimeout(timeout);
+				timeout = setTimeout(function () {
+					clickCount = 0;
+				}, 200);
+				if (clickCount == 3) {
+					$("#nozokiBtn").show();
+				}
+			});
+		});
+
+		// 선택한 카드에 따른 해설
+		function getInput() {
+			let userInput = document.getElementById('userInput').value;
+
+			// 전체 카드 공개
+			if (userInput === "X") {
+				var element = document.getElementById("nozokiBtn");
+				let cardsDisplay = "";
+				for (let i = 0; i < options.length; i++) {
+					cardsDisplay += options[i] + ": " + tarotCards[i] + " (" + isReversed[options[i]] + ")" + "<br>";
+				}
+
+				Swal.fire({
+					title: 'テーブル上のカード一覧',
+					html: cardsDisplay,
+					confirmButtonText: '確認'
+				});
+
+				return;
+			}
+
+			// 카드 인덱스 매핑
+			let selectedCardIndex = cardIndexMap[userInput];
+			let selectedCard = tarotCards[selectedCardIndex];
+			let selectedCardPosition = isReversed[userInput];
+
+			let interpretation = "";
+			let reverseInterpretation = "";
+
+			// 각 카드별 정위치, 역위치 해설
+			switch (selectedCard) {
+				case "I 愚者 (The Fool)":
+					interpretation = "このカードの正位置は、新たなスタート、新たな旅の始まりを表します。このカードは、純粋さ、未熟さ、自由を象徴しています。新しい始まり、冒険、そして新しい可能性を表し、未来への希望と挑戦を意味します。新しい冒険に対してオープンな心を持ち、直感に従うことが大切です。";
+					reverseInterpretation = "このカードの逆位置は、無謀な行動、軽率さ、注意を払わないことを表します。賢明さと慎重さが必要であり、責任感を持って行動することが求められます。周囲の環境をよく観察し、計画を立てることが重要です。";
+					break;
+				case "II 魔術師 (The Magician)":
+					interpretation = "このカードの正位置は、創造的な力、自信、自己コントロールを表します。自分の目標を達成するための能力とリソースを持っていることを暗示しています。自分のスキルを信じ、行動を起こすことが成功への鍵です。";
+					reverseInterpretation = "このカードの逆位置は、能力の欠如、自分の能力をうまく活用できていないことを示します。自己コントロールと自信を取り戻す必要があります。自分の強みを再評価し、必要なスキルを磨くことが大切です。";
+					break;
+				case "III 女教皇 (The High Priestess)":
+					interpretation = "このカードの正位置は、直感、内なる知識、秘密を表します。自分の直感を信じ、それに従うことが重要です。内なる声に耳を傾け、静かな時間を持つことを心がけましょう。";
+					reverseInterpretation = "このカードの逆位置は、純粋な直感の喪失、混乱、秘密の暴露を表します。感情的に混乱している可能性があります。自分の感情を整理し、信頼できる人に相談することが助けになります。";
+					break;
+				case "IV 女帝 (The Empress)":
+					interpretation = "このカードの正位置は、豊かさ、安らぎ、自然の力を表します。人生の豊かさと幸せを周囲に広める役割を果たします。自分を大切にし、周囲の人々と良好な関係を築くことが重要です。";
+					reverseInterpretation = "このカードの逆位置は、自己愛が欠けていたり、他人に依存しがちな傾向があります。自分を愛し、尊重することを意識しましょう。";
+					break;
+				case "V 皇帝 (The Emperor)":
+					interpretation = "このカードの正位置は、権威とコントロール、秩序を表します。責任感と自分の意志をうまく表現します。自信を持ってリーダーシップを発揮し、周囲を導くことが求められます。";
+					reverseInterpretation = "このカードの逆位置は、コントロール力の欠如、自己コントロールの喪失を表します。自分の権威を見直し、再び安定性を取り戻す努力が必要です。";
+					break;
+				case "VI 教皇 (The Hierophant)":
+					interpretation = "このカードの正位置は、知恵や教え、伝統を表します。正統的な価値観や信仰を重視する傾向を示しています。伝統を尊重しつつ、自分の価値観を見つけることが大切です。";
+					reverseInterpretation = "このカードの逆位置は、限られた思考、独断的な態度を表します。頑固な態度や伝統にとらわれがちな傾向があるかもしれません。新しい視点を受け入れ、柔軟性を持つことが重要です。";
+					break;
+				case "VII 恋人 (The Lovers)":
+					interpretation = "このカードの正位置は、愛とパートナーシップ、結合を表します。互換性のある価値観と調和を象徴しています。相手とのコミュニケーションを大切にし、関係を深める努力をしましょう。";
+					reverseInterpretation = "このカードの逆位置は、人間関係の不安、決断の難しさを表します。葛藤を解決するために、オープンな対話を心がけることが重要です。";
+					break;
+				case "VIII 戦車 (The Chariot)":
+					interpretation = "このカードの正位置は、勝利と進歩、自己コントロールを表します。目標に向かって進む集中力と決断力を表します。自分の意志を信じ、目標に向かって全力を尽くすことが大切です。";
+					reverseInterpretation = "このカードの逆位置は、コントロールの喪失、迷いや方向性の喪失を表します。目標を再定義し、自分の力を取り戻すための計画を立てることが必要です。";
+					break;
+				case "IX 力 (Strength)":
+					interpretation = "このカードの正位置は、勇気と忍耐力、内なる力を表します。困難な状況でも勇気を持って前進する能力を表しています。自分の強さを信じ、挑戦に立ち向かうことが大切です。";
+					reverseInterpretation = "このカードの逆位置は、自分の強さを認められない、または内面の弱さを表します。自分を信じ、内面的な強さを取り戻す努力が必要です。";
+					break;
+				case "X 隠者 (The Hermit)":
+					interpretation = "このカードの正位置は、悟りや瞑想、内なる知恵を表します。自己発展と成長のための静かな時間を象徴しています。内なる真実を探求するための時間を大切にしましょう。";
+					reverseInterpretation = "このカードの逆位置は、孤立や不安、内面の深い悩みを表します。孤独感を感じたら、信頼できる人に相談し、内面的な安定を見つける努力をしましょう。";
+					break;
+				case "XI 運命の輪 (Wheel of Fortune)":
+					interpretation = "このカードの正位置は、運命、循環と流れを表しています。幸運の変化と人生の変化を意味します。変化を受け入れ、流れに乗ることが成功につながります。";
+					reverseInterpretation = "このカードの逆位置は、変化の抵抗、運命の繰り返しを表します。変化に抵抗せず、新しい機会を受け入れることが重要です。";
+					break;
+				case "XII 正義 (Justice)":
+					interpretation = "このカードの正位置は、公正とバランス、現実的な判断を表します。責任感と論理的思考を象徴しています。公正な判断を下し、バランスを保つことが大切です。";
+					reverseInterpretation = "このカードの逆位置は、不公平や不均衡、公平でない状況を表します。不当な扱いを受けている場合、状況を再評価し、必要に応じて行動を起こすことが重要です。";
+					break;
+				case "XIII 吊るされた男 (The Hanged Man)":
+					interpretation = "このカードの正位置は、諦めと犠牲、視点の変化を表します。状況を完全に理解するために視点を変える準備ができていることを示しています。柔軟な思考を持ち、新しい視点を受け入れることが大切です。";
+					reverseInterpretation = "このカードの逆位置は、無力感や抵抗、視点の固定化を表します。変化に抵抗せず、オープンな心で状況を再評価することが必要です。";
+					break;
+				case "XIV 死神 (Death)":
+					interpretation = "このカードの正位置は、変化と新たな始まり、変革を表します。過去のものを捨てて新たなスタートを切る準備ができていることを象徴します。変化を恐れず、新しい機会を受け入れることが重要です。";
+					reverseInterpretation = "このカードの逆位置は、変化の抵抗、変容の遅れを表します。内なる変化に対してオープンになり、成長の機会を逃さないことが大切です。";
+					break;
+				case "XV 節制 (Temperance)":
+					interpretation = "このカードの正位置は、調和とバランス、自制とコントロールを表します。内面の調和と外界とのバランスを見つけるのに重要な役割を果たします。節制を心がけ、心の平和を保つことが大切です。";
+					reverseInterpretation = "このカードの逆位置は、不均衡や過度、自制心の欠如を表します。感情や行動が過度になっている場合、冷静さを取り戻す努力が必要です。";
+					break;
+				case "XVI 悪魔 (The Devil)":
+					interpretation = "このカードの正位置は、束縛や誘惑、自由の制限を表します。物質的な欲望や依存関係を象徴し、自分を阻む障害を克服する時を表しています。自分の欲望を見極め、自由を取り戻す努力が大切です。";
+					reverseInterpretation = "このカードの逆位置は、自由の回復を表します。束縛から解放され、自由を取り戻すチャンスが与えられる可能性があります。新たな選択肢を見つけ、自分の人生を再構築することが重要です。";
+					break;
+				case "XVII 塔 (The Tower)":
+					interpretation = "このカードの正位置は、破壊と変化、急激な衝撃を表します。過去のシステムが崩壊し、新しいチャンスが現れる時を象徴します。変化を受け入れ、必要な変革を行うことが大切です。";
+					reverseInterpretation = "このカードの逆位置は、適応と再構築、建設的な変化を表します。破壊的な状況を克服し、再構築する機会が与えられます。過去から学び、新たな基盤を築くことが重要です。";
+					break;
+				case "XVIII 星 (The Star)":
+					interpretation = "このカードの正位置は、希望とインスピレーション、内なる疲れた心を癒す光を表します。希望と期待、内なる平和と確信を象徴し、新たな希望と未来の明るい展望を示しています。自分の夢に向かって進む勇気を持ち、ポジティブなエネルギーを周囲に広めることが大切です。";
+					reverseInterpretation = "このカードの逆位置は、希望の喪失、内面の不安や恐怖を表します。不安を感じたら、自分の内なる平和を見つけるための方法を探し、サポートを求めることが重要です。";
+					break;
+				case "XIX 月 (The Moon)":
+					interpretation = "このカードの正位置は、不安や混乱、隠された真実を表します。感情的な流れや不安定な状況を象徴し、内なる闇や恐怖に直面するときを表しています。真実を発見し、理解するために、自分の感情に向き合うことが大切です。";
+					reverseInterpretation = "このカードの逆位置は、混乱の解消、真実の解明を表します。混乱が解消され、真実が明らかになる時期が来ることを信じ、自分を解放することが重要です。";
+					break;
+				case "XX 太陽 (The Sun)":
+					interpretation = "このカードの正位置は、明るい未来と幸福、活力と成就を表します。幸せで明るいエネルギーを象徴し、成功と満足をもたらす新しい始まりを表しています。自分の成功を祝福し、周囲の人々と喜びを分かち合うことが大切です。";
+					reverseInterpretation = "このカードの逆位置は、自我の喪失、自己実現の困難を表します。自分を再発見し、内なる光を取り戻すための努力をすることが重要です。";
+					break;
+				case "XXI 審判 (Judgement)":
+					interpretation = "このカードの正位置は、再生と決断、新たな始まりを表します。自我の復活と新しい方向性を見つける過程を象徴し、過去を振り返り、新しい機会を受け入れることを表しています。過去の経験を活かして、未来に向かって進む勇気を持つことが大切です。";
+					reverseInterpretation = "このカードの逆位置は、再評価と自覚、内面の変化を表します。過去の過ちを振り返り、新たなスタートを切るための再評価が必要です。内面的な成長を促す努力をしましょう。";
+					break;
+				case "XXII 世界 (The World)":
+					interpretation = "このカードの正位置は、完成と達成、満足と成功を表します。目標の達成と完成を象徴し、新たなサイクルの始まりを表しています。達成感を味わい、新しい挑戦に向かう準備をすることが大切です。";
+					reverseInterpretation = "このカードの逆位置は、完成の欠如、目標の未完成を表します。目標を再定義し、達成に向けた具体的な計画を立てることが重要です。";
+					break;
+				default:
+					interpretation = "不明なカード";
+					reverseInterpretation = "不明なカード";
+			}
+
+			// 타자치기 효과
+			setTimeout(function () {
+				function typeWriterEffect(element, text, delay, callback) {
+					const lines = text.split('<br>');
+					let lineIndex = 0;
+					let charIndex = 0;
+
+					const intervalId = setInterval(() => {
+						if (lineIndex < lines.length) {
+							if (charIndex < lines[lineIndex].length) {
+								element.innerHTML += lines[lineIndex].charAt(charIndex);
+								charIndex++;
+							} else {
+								element.innerHTML += '<br>';
+								charIndex = 0;
+								lineIndex++;
+							}
+						} else {
+							clearInterval(intervalId);
+							if (callback) callback();
+						}
+					}, delay);
+
+					// 마우스 클릭 또는 터치 시 타자치기 효과 생략
+					function skipTypeWriter() {
+						clearInterval(intervalId);
+						element.innerHTML = text;
+						if (callback) callback();
+						document.removeEventListener('click', skipTypeWriter);
+						document.removeEventListener('touchstart', skipTypeWriter);
+					}
+
+					// 타자치기 효과 시작
+					document.addEventListener('click', skipTypeWriter);
+					document.addEventListener('touchstart', skipTypeWriter);
+				}
+
+				// 버튼 중복 생성 방지용
+				var isCopyButtonVisible = false;
+
+				// 결과 저장 및 새로고침 기능
+				function saveResult() {
+					if (isCopyButtonVisible) return;
+					isCopyButtonVisible = true;
+
+					let today = new Date();
+					let formattedDate = today.getMonth() + 1 + "月" + today.getDate() + "日";
+					let resultText = "占った日: " + formattedDate + "\n" +
+						"選んだカード: " + selectedCard + "\n" +
+						"位置: " + selectedCardPosition + "\n" +
+						"説明: " + (selectedCardPosition === "逆位置" ? reverseInterpretation : interpretation);
+
+					// 복사하기 버튼 생성
+					let button = document.createElement('button');
+					button.id = 'copyButton';
+					button.className = 'btn btn-primary';
+					button.style.background = 'linear-gradient(135deg, #251327, #28153C)';
+					button.style.borderColor = '#300959';
+					button.style.borderRadius = '15px';
+					button.style.padding = '15px 30px';
+					button.style.margin = '0 auto';
+					button.style.display = 'block';
+					button.style.opacity = '0';
+					button.style.transition = 'opacity 2.75s';
+					button.innerHTML = '結果をコピーして最初に戻る';
+					button.onclick = function () {
+						navigator.clipboard.writeText(resultText).then(function () {
+							console.log('Copying to clipboard was successful!');
+
+							// 전체 요소 가려서 사라진 것 처럼 보이게 하기
+							let curtain = document.createElement('div');
+							curtain.style.position = 'fixed';
+							curtain.style.top = '0';
+							curtain.style.left = '0';
+							curtain.style.width = '100%';
+							curtain.style.height = '100%';
+							curtain.style.backgroundColor = '#2C2C2C';
+							curtain.style.zIndex = '9999';
+							curtain.style.opacity = '0';
+							curtain.style.transition = 'opacity 0.5s';
+							document.body.appendChild(curtain);
+
+							setTimeout(function () {
+								curtain.style.opacity = '1';
+							}, 0);
+
+							setTimeout(function () {
+								location.reload();
+								isCopyButtonVisible = false;
+							}, 500);
+						}, function (err) {
+							console.error('Could not copy text: ', err);
+						});
+					};
+
+					let buttonContainer = document.getElementById('buttonContainer');
+					buttonContainer.appendChild(button);
+
+					// Special thanks 표시
+					let thanksText = document.createElement('p');
+					thanksText.id = 'specialThanks';
+					thanksText.innerHTML = 'Special thanks to 〇〇 <!-- <a href="https://x.com" target="_blank" style="vertical-align: text-bottom;"><svg width="16" height="16" viewBox="0 0 24 24" style="vertical-align: text-bottom;"><path d="M 18.244 2.25 h 3.308 l -7.227 8.26 l 8.502 11.24 H 16.17 l -5.214 -6.817 L 4.99 21.75 H 1.68 l 7.73 -8.835 L 1.254 2.25 H 8.08 l 4.713 6.231 Z m -1.161 17.52 h 1.833 L 7.084 4.126 H 5.117 Z" fill="white" stroke="none" stroke-width="0" /></svg></a> -->';
+					thanksText.classList.add('text-muted');
+					thanksText.style.textAlign = 'center';
+					thanksText.style.opacity = '0';
+					thanksText.style.transition = 'opacity 2.75s';
+					thanksText.style.marginTop = '20px';
+					thanksText.style.display = 'none'; // 이후 번역 개선본 도움받으면 none을 block으로 바꾸기
+					buttonContainer.appendChild(thanksText);
+
+					setTimeout(function () {
+						button.style.opacity = '1';
+					}, 250);
+
+					setTimeout(function () {
+						thanksText.style.opacity = '1';
+					}, 750);
+				}
+
+				// 결과를 표시
+				let result = document.getElementById('result');
+				let resultText = "<br>あなたが選んだカードは、<br>「" + selectedCard + "」です。<br>";
+				if (isReversed[userInput] === "逆位置") {
+					resultText += "<br>逆位置が出きました。<br>";
+					resultText += "<br>" + reverseInterpretation + "<br>";
+					resultText += "<br>占い結果は以上です。";
+				} else {
+					resultText += "<br>正位置が出きました。<br>";
+					resultText += "<br>" + interpretation + "<br>";
+					resultText += "<br>占い結果は以上です。";
+				}
+
+				result.innerHTML = '';
+
+				typeWriterEffect(result, resultText, 50, function () {
+
+					// 타자치기 효과가 끝나면 결과 저장 기능을 실행
+					saveResult();
+
+				});
+			}, 500);
+
+			// 결과 표시 시 다른 요소들 숨김
+			let elementsToHide = document.querySelectorAll('.card-button, #cards, #nozoki, .btn-secondary, #userInput');
+
+			for (let i = 0; i < elementsToHide.length; i++) {
+				elementsToHide[i].style.transition = "all 0.5s";
+				elementsToHide[i].style.opacity = "0";
+			}
+
+			setTimeout(function () {
+				for (let i = 0; i < elementsToHide.length; i++) {
+					elementsToHide[i].remove();
+				}
+			}, 500);
+		}
+	</script>
+</body>
+
+</html>
